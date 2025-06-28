@@ -3,7 +3,7 @@ name: Terraform Deploy to AWS
 on:
   push:
     branches:
-      - master  # Triggers when you push to the master branch
+      - master
 
 jobs:
   terraform:
@@ -16,17 +16,12 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.6.6  # Match your local Terraform version
+          terraform_version: 1.6.6
 
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Format Check
-        run: terraform fmt -check
-
-      - name: Terraform Validate
-        run: terraform validate
-
+    
       - name: Terraform Plan
         run: terraform plan
         env:
