@@ -224,16 +224,18 @@ output "cloudfront_domain_name" {
   value       = aws_cloudfront_distribution.website_distribution.domain_name
   description = "Domain name of the CloudFront distribution (with HTTPS)"
 }
+#automation script 
 resource "aws_s3_bucket_public_access_block" "disable_block" {
-  bucket = aws_s3_bucket.website_bucket.id
+  bucket = aws_s3_bucket.website.id  
 
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
   restrict_public_buckets = false
 }
+
 resource "aws_s3_bucket_policy" "website_policy" {
-  bucket = aws_s3_bucket.website_bucket.id
+  bucket = aws_s3_bucket.website.id 
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -241,7 +243,7 @@ resource "aws_s3_bucket_policy" "website_policy" {
         Effect    = "Allow",
         Principal = "*",
         Action    = "s3:GetObject",
-        Resource  = "${aws_s3_bucket.website_bucket.arn}/*"
+        Resource  = "${aws_s3_bucket.website.arn}/*"
       }
     ]
   })
